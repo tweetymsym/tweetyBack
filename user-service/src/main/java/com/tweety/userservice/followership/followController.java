@@ -49,7 +49,30 @@ public class followController {
         return followers;
     }
 
-   
+    @PostMapping("/unfollow")
+    public ResponseEntity<Void> UnfollowUser(
+            @RequestBody UnfollowRequest unfollowRequest
+    )
+    {
+        followService.UnFollowUser(unfollowRequest);
+        return new ResponseEntity<>(
+                HttpStatus.CREATED
+        );
+
+    }
+
+
+    @PostMapping("/removefromfollowers")
+    public ResponseEntity<Void> UnfollowUser(
+            @RequestBody RemoveFromFollowersRequest removeFromFollowersRequest
+    )
+    {
+        followService.RemoveFromMyFollowers(removeFromFollowersRequest);
+        return new ResponseEntity<>(
+                HttpStatus.CREATED
+        );
+
+    }
 
 
 

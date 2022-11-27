@@ -43,7 +43,30 @@ public class followService {
 
     }
 
-   
+    public Boolean UnFollowUser(UnfollowRequest unfollowRequest)
+
+    {
+        Long currentUser = unfollowRequest.CurrentUserId();
+        Long UsertoUnFollow = unfollowRequest.UserToUnFollow();
+
+        if ( currentUser == UsertoUnFollow ) throw new IllegalArgumentException(" You can not Unfollow your self");
+
+        return  followRepository.UnfollowUser(currentUser,UsertoUnFollow);
+
+    }
+
+
+
+    public Boolean RemoveFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
+
+    {
+        Long currentUser = removeFromFollowersRequest.CurrentUserId();
+        Long UserToRemove = removeFromFollowersRequest.UserToRemoveId();
+        if ( currentUser == UserToRemove ) throw new IllegalArgumentException(" You can not Unfollow your self");
+
+        return  followRepository.RemoveFromMyFollowers(currentUser,UserToRemove);
+
+    }
 
 
 
