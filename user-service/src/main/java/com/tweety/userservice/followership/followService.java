@@ -29,9 +29,21 @@ public class followService {
         return  followRepository.followUser(currentUser,UsertoFollow);
 
     }
-    
 
 
+    public List<User> getFollowings(Long CurrentUserID)
+    {
+        return followRepository.getFollowings(CurrentUserID);
+
+    }
+
+    public List<User> getFollowers(Long CurrentUserID)
+    {
+        return followRepository.getFollowers(CurrentUserID);
+
+    }
+
+   
 
 
 

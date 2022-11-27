@@ -33,7 +33,27 @@ public class followController {
 
     }
 
+    @GetMapping("followers/{UserId}")
+    public List<User> getFollowers(
+             @PathVariable Long UserId )
+    {
+        List<User> followers= followService.getFollowers(UserId);
+        return followers;
+    }
+
+    @GetMapping("following/{UserId}")
+    public List<User> getFollowing(
+            @PathVariable Long UserId )
+    {
+        List<User> followers= followService.getFollowings(UserId);
+        return followers;
+    }
+
    
+
+
+
+
 
 
 
