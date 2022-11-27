@@ -1,8 +1,17 @@
+#spring:
+#  data:
+#    mongodb:
+#      uri: "mongodb://localhost:27017/tweet_db"
+##      database: "tweet_db"
+##      port: "27017"
+#server:
+#  port: 8844
+config-server:
+  url: "localhost"
+  port: "8888"
+
 spring:
-  data:
-    mongodb:
-      uri: "mongodb://localhost:27017/tweet_db"
-#      database: "tweet_db"
-#      port: "27017"
-server:
-  port: 8844
+  application:
+    name: "tweet-service"
+  config:
+    import: "optional:http://${config-server.url}:${config-server.port}"

@@ -1,0 +1,9 @@
+config-server:
+  url: "localhost"
+  port: "8888"
+
+spring:
+  application:
+    name: "feed-service"
+  config:
+    import: "optional:http://${config-server.url}:${config-server.port}"
