@@ -2,12 +2,10 @@ package com.tweety.userservice.followership;
 
 
 import com.tweety.userservice.dto.FollowRequest;
-import com.tweety.userservice.dto.RemoveFromFollowersRequest;
-import com.tweety.userservice.dto.UnfollowRequest;
 import com.tweety.userservice.model.User;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,12 +19,12 @@ public class followService {
     public Boolean FollowUser(FollowRequest followRequest)
 
     {
-        Long currentUser = followRequest.CurrentUserId();
-        Long UsertoFollow = followRequest.UserToFollow();
+        Long currentUser = followRequest.getCurrentUserId();
+        Long userToFollow = followRequest.getUserToFollow();
 
-        if ( currentUser == UsertoFollow ) throw new IllegalArgumentException(" You can not follow your self");
+        if ( currentUser == userToFollow ) throw new IllegalArgumentException(" You can not follow your self");
 
-        return  followRepository.followUser(currentUser,UsertoFollow);
+        return  followRepository.followUser(currentUser, userToFollow);
 
     }
 
@@ -46,35 +44,26 @@ public class followService {
     public Boolean UnFollowUser(UnfollowRequest unfollowRequest)
 
     {
-        Long currentUser = unfollowRequest.CurrentUserId();
-        Long UsertoUnFollow = unfollowRequest.UserToUnFollow();
+        Long currentUser = unfollowRequest.getCurrentUserId();
+        Long usertoUnFollow = unfollowRequest.getUserToFollow();
 
         if ( currentUser == UsertoUnFollow ) throw new IllegalArgumentException(" You can not Unfollow your self");
 
-        return  followRepository.UnfollowUser(currentUser,UsertoUnFollow);
+        return  followRepository.UnfollowUser(currentUser,usertoUnFollow);
 
     }
 
 
 
-    public Boolean RemoveFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
+    public Boolean removeFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
 
     {
         Long currentUser = removeFromFollowersRequest.CurrentUserId();
         Long UserToRemove = removeFromFollowersRequest.UserToRemoveId();
         if ( currentUser == UserToRemove ) throw new IllegalArgumentException(" You can not Unfollow your self");
 
-        return  followRepository.RemoveFromMyFollowers(currentUser,UserToRemove);
+        return  followRepository.removeFromMyFollowers(currentUser,UserToRemove);
 
     }
-
-
-
-
-
-
-
-
-
 
 }

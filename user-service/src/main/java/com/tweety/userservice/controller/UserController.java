@@ -45,16 +45,12 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{userID}")
-    public ResponseEntity<Void> DeleteUser(@PathVariable Long userID)
-            throws Exception
-    {
+    public ResponseEntity<Void> DeleteUser(@PathVariable Long userID)  {
             userService.deleteUserById(userID);
         return  new ResponseEntity<>(
             HttpStatus.OK
     );
 
     }
-
-
 
 }

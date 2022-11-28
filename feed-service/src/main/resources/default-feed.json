@@ -1,0 +1,38 @@
+[
+  {
+    "userName": "person 1",
+    "userImage": "imgurl",
+    "content": "tweet 1",
+    "date": "1998-01-02"
+  },
+  {
+    "userName": "person 1",
+    "userImage": "imgurl",
+    "content": "tweet 2",
+    "date": "2000-02-05"
+  },
+  {
+    "userName": "person 2",
+    "userImage": "imgurl",
+    "content": "tweet 3",
+    "date": "2020-01-02"
+  },
+  {
+    "userName": "person 3",
+    "userImage": "imgurl",
+    "content": "tweet 4",
+    "date": "2001-07-22"
+  },
+  {
+    "userName": "person 1",
+    "userImage": "imgurl",
+    "content": "tweet 5",
+    "date": "1998-01-02"
+  },
+  {
+    "userName": "person 5",
+    "userImage": "imgurl",
+    "content": "tweet 6",
+    "date": "1998-01-02"
+  }
+]
