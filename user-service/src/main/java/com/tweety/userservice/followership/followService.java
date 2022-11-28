@@ -40,4 +40,30 @@ public class followService {
         return followRepository.getFollowers(CurrentUserID);
 
     }
+
+    public Boolean UnFollowUser(UnfollowRequest unfollowRequest)
+
+    {
+        Long currentUser = unfollowRequest.getCurrentUserId();
+        Long usertoUnFollow = unfollowRequest.getUserToFollow();
+
+        if ( currentUser == UsertoUnFollow ) throw new IllegalArgumentException(" You can not Unfollow your self");
+
+        return  followRepository.UnfollowUser(currentUser,usertoUnFollow);
+
+    }
+
+
+
+    public Boolean removeFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
+
+    {
+        Long currentUser = removeFromFollowersRequest.CurrentUserId();
+        Long UserToRemove = removeFromFollowersRequest.UserToRemoveId();
+        if ( currentUser == UserToRemove ) throw new IllegalArgumentException(" You can not Unfollow your self");
+
+        return  followRepository.removeFromMyFollowers(currentUser,UserToRemove);
+
+    }
+
 }
