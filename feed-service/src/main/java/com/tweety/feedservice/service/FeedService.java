@@ -2,6 +2,7 @@ package com.tweety.feedservice.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tweety.feedservice.dto.TweetInListDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -14,6 +15,7 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class FeedService {
 
     private ObjectMapper objectMapper;
@@ -22,8 +24,14 @@ public class FeedService {
         TweetInListDto[] array = new TweetInListDto[0];
 
         try {
+            String json = new String(
+                    Objects.requireNonNull(
+                            getClass().getResourceAsStream("/default-feed.json")
+                    ).readAllBytes()
+            );
+            log.info(json);
             array = objectMapper.readValue(
-                    Objects.requireNonNull(getClass().getResource("/default-feed.json")).getFile(),
+                    json,
                     TweetInListDto[].class
             );
         } catch (IOException e) {
