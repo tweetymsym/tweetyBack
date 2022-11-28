@@ -6,4 +6,7 @@ spring:
   application:
     name: "feed-service"
   config:
-    import: "optional:http://${config-server.url}:${config-server.port}"
+    import: "optional:configserver:http://${config-server.url}:${config-server.port}"
+
+server:
+  port: "8777"
