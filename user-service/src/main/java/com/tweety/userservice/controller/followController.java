@@ -39,6 +39,16 @@ public class followController {
         );
     }
 
+    @GetMapping("following/id-list/{UserId}")
+    public ResponseEntity<UserIdListDto> getFollowingIdList(
+            @PathVariable Long UserId )
+    {
+        return new ResponseEntity<>(
+                followService.getFollowingsIdList(UserId),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("following/{UserId}")
     public ResponseEntity<List<User>> getFollowing(
             @PathVariable Long UserId )

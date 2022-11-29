@@ -1,6 +1,7 @@
 package com.tweety.tweetservice.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tweety.tweetservice.dto.TweetInListDto;
 import com.tweety.tweetservice.dto.UserIdListDto;
 import com.tweety.tweetservice.mapper.TweetMapper;
 import com.tweety.tweetservice.mapper.TweetMapperImpl;
@@ -14,7 +15,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,8 +61,18 @@ class TweetServiceTest {
     }
 
     @Test
-    void testGetUserTweets() {
+    void testGetUserTweets_testSize() {
         TweetService tweetService = new TweetService(tweetRepository, tweetMapper);
         assertEquals(6, tweetService.getUserTweets(new UserIdListDto(new ArrayList<>())).size());
+    }
+
+    @Test
+    void testGetUserTweets_testFirstElement() throws ParseException {
+        TweetService tweetService = new TweetService(tweetRepository, tweetMapper);
+        TweetInListDto tweet = new TweetInListDto();
+        tweet.setUserId(1l);
+        tweet.setDate(new SimpleDateFormat("yyyy-MM-dd").parse("1998-01-02"));
+        tweet.setContent("tweet 1");
+        assertEquals(tweet, tweetService.getUserTweets(new UserIdListDto(new ArrayList<>())).get(0));
     }
 }

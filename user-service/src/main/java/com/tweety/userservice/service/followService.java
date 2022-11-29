@@ -4,12 +4,14 @@ package com.tweety.userservice.service;
 import com.tweety.userservice.dto.FollowRequest;
 import com.tweety.userservice.dto.RemoveFromFollowersRequest;
 import com.tweety.userservice.dto.UnfollowRequest;
+import com.tweety.userservice.dto.UserIdListDto;
 import com.tweety.userservice.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -57,15 +59,20 @@ public class followService {
 
 
 
-    public Boolean removeFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
+    public void removeFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
 
     {
         Long currentUser = removeFromFollowersRequest.getCurrentUserId();
         Long UserToRemove = removeFromFollowersRequest.getUserToRemoveId();
         if ( currentUser.equals(UserToRemove) ) throw new IllegalArgumentException(" You can not Unfollow your self");
 
-        return  followRepository.removeFromMyFollowers(currentUser,UserToRemove);
+        followRepository.removeFromMyFollowers(currentUser, UserToRemove);
 
     }
 
+    public UserIdListDto getFollowingsIdList(Long userId) {
+        return new UserIdListDto(getFollowings(userId).stream()
+                .map(User::getId)
+                .collect(Collectors.toList()));
+    }
 }

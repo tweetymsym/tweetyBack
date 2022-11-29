@@ -17,6 +17,14 @@ public class FeedController {
 
     private FeedService feedService;
 
+    @GetMapping("")
+    public ResponseEntity<List<TweetInListDto>> getFeed() {
+        return new ResponseEntity<>(
+                feedService.getFeed(),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/default")
     public ResponseEntity<List<TweetInListDto>> getDefaultFeed() {
         return new ResponseEntity<>(

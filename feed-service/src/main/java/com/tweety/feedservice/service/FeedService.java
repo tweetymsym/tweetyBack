@@ -1,6 +1,9 @@
 package com.tweety.feedservice.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tweety.feedservice.dto.TweetInListDto;
+import com.tweety.feedservice.dto.UserIdListDto;
+import com.tweety.feedservice.feignproxy.TweetServiceProxy;
+import com.tweety.feedservice.feignproxy.UserServiceProxy;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +22,8 @@ import java.util.Objects;
 public class FeedService {
 
     private ObjectMapper objectMapper;
+    private TweetServiceProxy tweetServiceProxy;
+    private UserServiceProxy userServiceProxy;
 
     public List<TweetInListDto> getDefaultFeed() {
         TweetInListDto[] array = new TweetInListDto[0];
@@ -38,5 +43,13 @@ public class FeedService {
             throw new RuntimeException(e);
         }
         return Arrays.asList(array);
+    }
+
+    public List<TweetInListDto> getFeed() {
+        UserIdListDto userIdListDto =
+                userServiceProxy.getFollowingIdList(1l).getBody();
+        List<TweetInListDto> tweetInListDtoList =
+                tweetServiceProxy.getTweets(userIdListDto).getBody();
+        return tweetInListDtoList;
     }
 }
