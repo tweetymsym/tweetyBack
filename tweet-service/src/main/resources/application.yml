@@ -1,9 +1,9 @@
 config-server:
-  url: "localhost"
-  port: "8888"
+    url: "localhost"
+    port: "8888"
 
 spring:
-  application:
-    name: "tweet-service"
-  config:
-    import: "optional:configserver:http://${config-server.url}:${config-server.port}"
+    application:
+        name: "tweet-service"
+    config:
+        import: "optional:configserver:http://${config-server.url}:${config-server.port}"

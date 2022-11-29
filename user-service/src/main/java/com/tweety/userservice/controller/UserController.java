@@ -20,37 +20,33 @@ public class UserController {
 
     private UserService userService;
 
-
     @PostMapping("")
     public ResponseEntity<Void> createUser(
             @RequestBody CreateUserDto dto
             )
     {
-        User user  = userService.createUser(dto);
-
+        userService.createUser(dto);
         return new ResponseEntity<>(
                 HttpStatus.CREATED
         );
 
     }
 
-
-    @GetMapping("/users")
-    public List<User> GetAllUser()
-    {
-
-        List<User> users= userService.getAllUsers();
+    @GetMapping("")
+    public ResponseEntity<List<User>> GetAllUser() {
         //if (users.size()==0) return  new ResponseEntity<List<User>>(userService.getAllUsers(), HttpStatus.NO_CONTENT);
-        return  userService.getAllUsers();
+        return  new ResponseEntity<>(
+                userService.getAllUsers(),
+                HttpStatus.OK
+        );
     }
 
-    @DeleteMapping("/delete/{userID}")
+    @DeleteMapping("/{userID}")
     public ResponseEntity<Void> DeleteUser(@PathVariable Long userID)  {
             userService.deleteUserById(userID);
         return  new ResponseEntity<>(
-            HttpStatus.OK
+            HttpStatus.NO_CONTENT
     );
-
     }
 
 }

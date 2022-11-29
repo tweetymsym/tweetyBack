@@ -1,4 +1,4 @@
-package com.tweety.userservice.followership;
+package com.tweety.userservice.repository;
 
 import com.tweety.userservice.model.User;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
@@ -25,7 +25,7 @@ public interface followRepository extends Neo4jRepository<User,Long> {
             Long UserToUnFollow);
 
     @Query("MATCH (u:User WHERE id(u)=:#{#CurrentUserId})<-[r:FOLLOWS]-(p:User WHERE id(p)=:#{#UserToRemove}) DETACH DELETE r")
-    Boolean RemoveFromMyFollowers(
+    Boolean removeFromMyFollowers(
             @Param("CurrentUserId")
             Long CurrentUserId,
             @Param("UserToRemove")

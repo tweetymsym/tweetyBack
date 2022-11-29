@@ -1,0 +1,32 @@
+[
+  {
+    "userId": 1,
+    "content": "tweet 1",
+    "date": "1998-01-02"
+  },
+  {
+    "userId": 2,
+    "content": "tweet 2",
+    "date": "2000-02-05"
+  },
+  {
+    "userId": 3,
+    "content": "tweet 3",
+    "date": "2020-01-02"
+  },
+  {
+    "userId": 4,
+    "content": "tweet 4",
+    "date": "2001-07-22"
+  },
+  {
+    "userId": 5,
+    "content": "tweet 5",
+    "date": "1998-01-02"
+  },
+  {
+    "userId": 6,
+    "content": "tweet 6",
+    "date": "1998-01-02"
+  }
+]

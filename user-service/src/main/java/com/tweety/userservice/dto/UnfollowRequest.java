@@ -1,7 +1,13 @@
 package com.tweety.userservice.dto;
 
-public record UnfollowRequest (
-        Long CurrentUserId,
-        Long UserToUnFollow
-)
-{}
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class UnfollowRequest {
+        private Long CurrentUserId;
+        private Long UserToUnFollow;
+}
