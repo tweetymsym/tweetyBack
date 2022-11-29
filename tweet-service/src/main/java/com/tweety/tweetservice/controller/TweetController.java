@@ -1,6 +1,8 @@
 package com.tweety.tweetservice.controller;
 
 import com.tweety.tweetservice.dto.CreateTweetDto;
+import com.tweety.tweetservice.dto.TweetInListDto;
+import com.tweety.tweetservice.dto.UserIdListDto;
 import com.tweety.tweetservice.model.Tweet;
 import com.tweety.tweetservice.service.TweetService;
 import lombok.AllArgsConstructor;
@@ -27,7 +29,17 @@ public class TweetController {
         );
     }
 
-    @GetMapping("test")
+    @GetMapping("")
+    public ResponseEntity<List<TweetInListDto>> getTweets(
+            @RequestBody UserIdListDto dto
+            ) {
+        return new ResponseEntity<>(
+                tweetService.getUserTweets(dto),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("")
     public ResponseEntity<List<Tweet>> getAllTweetsForTest() {
         return new ResponseEntity<>(
                 tweetService.getAllTweets(),

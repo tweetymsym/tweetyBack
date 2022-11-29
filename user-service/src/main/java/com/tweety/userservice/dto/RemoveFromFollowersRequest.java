@@ -1,8 +1,13 @@
 package com.tweety.userservice.dto;
 
-public record RemoveFromFollowersRequest
-       (
-       Long CurrentUserId,
-       Long UserToRemoveId
-)
-{}
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class RemoveFromFollowersRequest{
+       Long currentUserId;
+       Long userToRemoveId;
+}

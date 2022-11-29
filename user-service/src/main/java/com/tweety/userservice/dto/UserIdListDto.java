@@ -1,13 +1,16 @@
 package com.tweety.userservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class UnfollowRequest {
-        private Long CurrentUserId;
-        private Long UserToUnFollow;
+@AllArgsConstructor
+public class UserIdListDto {
+    List<Long> users;
 }
