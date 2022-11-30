@@ -14,7 +14,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/tweet")
+@RequestMapping("/api/tweets")
 public class TweetController {
 
     private TweetService tweetService;
@@ -39,7 +39,7 @@ public class TweetController {
         );
     }
 
-    @GetMapping("")
+    @GetMapping("/test")
     public ResponseEntity<List<Tweet>> getAllTweetsForTest() {
         return new ResponseEntity<>(
                 tweetService.getAllTweets(),
