@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class RemoveFromFollowersRequest{
-       Long currentUserId;
-       Long userToRemoveId;
+       String currentUserId;
+       String userToRemoveId;
 }

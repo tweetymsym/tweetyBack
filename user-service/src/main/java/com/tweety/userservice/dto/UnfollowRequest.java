@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UnfollowRequest {
-        private Long CurrentUserId;
-        private Long UserToUnFollow;
+        private String currentUserId;
+        private String userToUnFollow;
 }

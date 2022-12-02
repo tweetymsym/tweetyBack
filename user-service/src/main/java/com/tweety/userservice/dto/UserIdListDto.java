@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserIdListDto {
-    List<Long> users;
+    List<String> users;
 }

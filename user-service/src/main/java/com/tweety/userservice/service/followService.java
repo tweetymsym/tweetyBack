@@ -23,8 +23,8 @@ public class followService {
     public Boolean FollowUser(FollowRequest followRequest)
 
     {
-        Long currentUser = followRequest.getCurrentUserId();
-        Long userToFollow = followRequest.getUserToFollow();
+        String currentUser = followRequest.getCurrentUserId();
+        String userToFollow = followRequest.getUserToFollow();
 
         if ( currentUser == userToFollow ) throw new IllegalArgumentException(" You can not follow your self");
 
@@ -33,13 +33,13 @@ public class followService {
     }
 
 
-    public List<User> getFollowings(Long CurrentUserID)
+    public List<User> getFollowings(String CurrentUserID)
     {
         return followRepository.getFollowings(CurrentUserID);
 
     }
 
-    public List<User> getFollowers(Long CurrentUserID)
+    public List<User> getFollowers(String CurrentUserID)
     {
         return followRepository.getFollowers(CurrentUserID);
 
@@ -48,8 +48,8 @@ public class followService {
     public Boolean unFollowUser(UnfollowRequest unfollowRequest)
 
     {
-        Long currentUser = unfollowRequest.getCurrentUserId();
-        Long usertoUnFollow = unfollowRequest.getUserToUnFollow();
+        String currentUser = unfollowRequest.getCurrentUserId();
+        String usertoUnFollow = unfollowRequest.getUserToUnFollow();
 
         if ( currentUser.equals(usertoUnFollow) ) throw new IllegalArgumentException(" You can not Unfollow your self");
 
@@ -59,18 +59,18 @@ public class followService {
 
 
 
-    public void removeFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
+    public Boolean removeFromMyFollowers(RemoveFromFollowersRequest removeFromFollowersRequest)
 
     {
-        Long currentUser = removeFromFollowersRequest.getCurrentUserId();
-        Long UserToRemove = removeFromFollowersRequest.getUserToRemoveId();
+        String currentUser = removeFromFollowersRequest.getCurrentUserId();
+        String UserToRemove = removeFromFollowersRequest.getUserToRemoveId();
         if ( currentUser.equals(UserToRemove) ) throw new IllegalArgumentException(" You can not Unfollow your self");
 
-        followRepository.removeFromMyFollowers(currentUser, UserToRemove);
+        return followRepository.removeFromMyFollowers(currentUser, UserToRemove);
 
     }
 
-    public UserIdListDto getFollowingsIdList(Long userId) {
+    public UserIdListDto getFollowingsIdList(String userId) {
         return new UserIdListDto(getFollowings(userId).stream()
                 .map(User::getId)
                 .collect(Collectors.toList()));

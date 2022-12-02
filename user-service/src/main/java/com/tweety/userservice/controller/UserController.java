@@ -1,7 +1,6 @@
 package com.tweety.userservice.controller;
 
 import com.tweety.userservice.dto.CreateUserDto;
-import com.tweety.userservice.dto.FollowRequest;
 import com.tweety.userservice.model.User;
 import com.tweety.userservice.service.UserService;
 import lombok.AllArgsConstructor;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -42,11 +42,21 @@ public class UserController {
     }
 
     @DeleteMapping("/{userID}")
-    public ResponseEntity<Void> DeleteUser(@PathVariable Long userID)  {
+    public ResponseEntity<Void> DeleteUser(@PathVariable String userID)  {
             userService.deleteUserById(userID);
         return  new ResponseEntity<>(
             HttpStatus.NO_CONTENT
     );
+    }
+
+
+    @GetMapping("/{userID}")
+    public ResponseEntity<User> GetUser(@PathVariable String userID)  {
+        Optional<User> user = userService.getUserById(userID);
+        return  new ResponseEntity<>(
+                user.get(),
+                HttpStatus.OK
+        );
     }
 
 }

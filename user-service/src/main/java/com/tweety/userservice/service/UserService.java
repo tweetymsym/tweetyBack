@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -25,12 +26,13 @@ public class UserService {
     public User createUser(CreateUserDto dto)
     {
         User user = userMapper.createUserDtoToUser(dto);
+        user.setId(UUID.randomUUID().toString());
         return userRepository.save(user);
     }
 
 
 
-    public User updateLastTweet(Long userId, ZonedDateTime date)
+    public User updateLastTweet(String userId, ZonedDateTime date)
     {
         Optional<User> user = userRepository.findById(userId);
         user.get().setLastTweet(date);
@@ -43,11 +45,11 @@ public class UserService {
     }
 
 
-    public  Optional<User> getUserById(Long UserId) {
+    public  Optional<User> getUserById(String UserId) {
         return userRepository.findById(UserId);
     }
 
-    public void deleteUserById(Long UserId) {
+    public void deleteUserById(String UserId) {
          userRepository.deleteById(UserId);
     }
 

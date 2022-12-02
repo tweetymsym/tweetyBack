@@ -8,36 +8,36 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface followRepository extends Neo4jRepository<User,Long> {
+public interface followRepository extends Neo4jRepository<User,String> {
 
 
-    @Query("MATCH (CurrentUserId:User ) WHERE id(CurrentUserId)=:#{#CurrentUserId} MATCH (UserToFollow:User ) WHERE id(UserToFollow)=:#{#UserToFollow} CREATE (CurrentUserId)-[r:FOLLOWS]->(UserToFollow)")
+    @Query("MATCH (CurrentUserId:User ) WHERE CurrentUserId.id=:#{#CurrentUserId} MATCH (UserToFollow:User ) WHERE UserToFollow.id=:#{#UserToFollow} CREATE (CurrentUserId)-[r:FOLLOWS]->(UserToFollow)")
     Boolean followUser(
             @Param("CurrentUserId")
-            Long CurrentUserId,
+            String CurrentUserId,
             @Param("UserToFollow")
-            Long UserToFollow);
-    @Query("MATCH (u:User WHERE id(u)=:#{#CurrentUserId})-[r:FOLLOWS]->(p:User WHERE id(p)=:#{#UserToUnFollow}) DETACH DELETE r")
+            String UserToFollow);
+    @Query("MATCH (u:User WHERE u.id=:#{#CurrentUserId})-[r:FOLLOWS]->(p:User WHERE p.id=:#{#UserToUnFollow}) DETACH DELETE r")
     Boolean UnfollowUser(
             @Param("CurrentUserId")
-            Long CurrentUserId,
+            String CurrentUserId,
             @Param("UserToUnFollow")
-            Long UserToUnFollow);
+            String UserToUnFollow);
 
-    @Query("MATCH (u:User WHERE id(u)=:#{#CurrentUserId})<-[r:FOLLOWS]-(p:User WHERE id(p)=:#{#UserToRemove}) DETACH DELETE r")
+    @Query("MATCH (u:User WHERE u.id=:#{#CurrentUserId})<-[r:FOLLOWS]-(p:User WHERE p.id=:#{#UserToRemove}) DETACH DELETE r")
     Boolean removeFromMyFollowers(
             @Param("CurrentUserId")
-            Long CurrentUserId,
+            String CurrentUserId,
             @Param("UserToRemove")
-            Long UserToRemove);
+            String UserToRemove);
 
-    @Query("MATCH (CurrentUser:User ) WHERE id(CurrentUser)=:#{#UserId} MATCH (CurrentUser) -[r:FOLLOWS]->(users) RETURN users")
+    @Query("MATCH (CurrentUser:User ) WHERE CurrentUser.id=:#{#UserId} MATCH (CurrentUser) -[r:FOLLOWS]->(users) RETURN users")
     List<User> getFollowings(@Param("UserId")
-                             Long UserId  );
+                             String UserId  );
 
-    @Query("MATCH (CurrentUser:User ) WHERE id(CurrentUser)=:#{#UserId} MATCH (CurrentUser) <-[r:FOLLOWS]-(users) RETURN users")
+    @Query("MATCH (CurrentUser:User ) WHERE CurrentUser.id=:#{#UserId} MATCH (CurrentUser) <-[r:FOLLOWS]-(users) RETURN users")
     List<User> getFollowers(
             @Param("UserId")
-            Long UserId );
+            String UserId );
 
 }

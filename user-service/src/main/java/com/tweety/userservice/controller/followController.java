@@ -31,7 +31,7 @@ public class followController {
 
     @GetMapping("/followers/{UserId}")
     public ResponseEntity<List<User>> getFollowers(
-             @PathVariable Long UserId )
+             @PathVariable String UserId )
     {
         return new ResponseEntity<>(
                 followService.getFollowers(UserId),
@@ -41,7 +41,7 @@ public class followController {
 
     @GetMapping("following/id-list/{UserId}")
     public ResponseEntity<UserIdListDto> getFollowingIdList(
-            @PathVariable Long UserId )
+            @PathVariable String UserId )
     {
         return new ResponseEntity<>(
                 followService.getFollowingsIdList(UserId),
@@ -51,7 +51,7 @@ public class followController {
 
     @GetMapping("following/{UserId}")
     public ResponseEntity<List<User>> getFollowing(
-            @PathVariable Long UserId )
+            @PathVariable String UserId )
     {
         return new ResponseEntity<>(
                 followService.getFollowings(UserId),
@@ -59,10 +59,12 @@ public class followController {
         );
     }
 
-    @DeleteMapping("")
+    @PostMapping("/unfollow")
     public ResponseEntity<Void> UnfollowUser(
             @RequestBody UnfollowRequest unfollowRequest
+
     )
+            throws IllegalArgumentException
     {
         followService.unFollowUser(unfollowRequest);
         return new ResponseEntity<>(
@@ -74,8 +76,11 @@ public class followController {
     public ResponseEntity<Void> UnfollowUser(
             @RequestBody RemoveFromFollowersRequest removeFromFollowersRequest
     )
+            throws IllegalArgumentException
     {
-        followService.removeFromMyFollowers(removeFromFollowersRequest);
+
+            followService.removeFromMyFollowers(removeFromFollowersRequest);
+
         return new ResponseEntity<>(
                 HttpStatus.CREATED
         );

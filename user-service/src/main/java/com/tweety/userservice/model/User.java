@@ -1,6 +1,7 @@
 package com.tweety.userservice.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,8 +23,7 @@ import java.util.List;
 public class User {
     //@Property
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
     @Property
     private String userName;
     @Property
@@ -34,6 +36,7 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
     @Property
     private ZonedDateTime lastTweet;
 

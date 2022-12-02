@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class FollowRequest {
-    private Long currentUserId;
-    private Long userToFollow;
+    private String currentUserId;
+    private String userToFollow;
 }
