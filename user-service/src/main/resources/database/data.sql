@@ -1,5 +1,5 @@
 
-CREATE CONSTRAINT ON (user:User) ASSERT user.email IS UNIQUE ;
+CREATE CONSTRAINT ON (user:User) ASSERT user.email IS UNIQUE //CREATE CONSTRAINT FOR (user:User) REQUIRE user.email is UNIQUE ;
 
 
 CREATE (yasser:User {userName: 'Karamiyasser', picture: 'myPic',firstName: 'Yasser', lastName: 'Karami',email: 'y@gmail.com', lastTweet: datetime({
