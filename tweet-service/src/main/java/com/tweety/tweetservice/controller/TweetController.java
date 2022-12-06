@@ -1,6 +1,7 @@
 package com.tweety.tweetservice.controller;
 
 import com.tweety.tweetservice.dto.CreateTweetDto;
+import com.tweety.tweetservice.dto.TweetDetailsDto;
 import com.tweety.tweetservice.dto.TweetInListDto;
 import com.tweety.tweetservice.dto.UserIdListDto;
 import com.tweety.tweetservice.model.Tweet;
@@ -45,6 +46,16 @@ public class TweetController {
             ) {
         return new ResponseEntity<>(
                 tweetService.getUserTweets(dto),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TweetDetailsDto> getTweetWithId(
+            @PathVariable("id") String id
+    ) {
+        return new ResponseEntity<>(
+                tweetService.getTweetWithId(id),
                 HttpStatus.OK
         );
     }

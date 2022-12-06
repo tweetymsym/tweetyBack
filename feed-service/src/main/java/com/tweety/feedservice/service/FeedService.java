@@ -1,5 +1,6 @@
 package com.tweety.feedservice.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tweety.feedservice.dto.TweetDetailsDto;
 import com.tweety.feedservice.dto.TweetInListDto;
 import com.tweety.feedservice.dto.UserIdListDto;
 import com.tweety.feedservice.openfeign.TweetServiceProxy;
@@ -48,5 +49,10 @@ public class FeedService {
         List<TweetInListDto> tweetInListDtoList =
                 tweetServiceProxy.getTweets(userIdListDto).getBody();
         return tweetInListDtoList;
+    }
+
+    public TweetDetailsDto getTweetsDetails(String id) {
+        return tweetServiceProxy.getTweetWithId(id)
+                .getBody();
     }
 }
