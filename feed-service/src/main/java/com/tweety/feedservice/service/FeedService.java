@@ -2,13 +2,10 @@ package com.tweety.feedservice.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tweety.feedservice.dto.TweetInListDto;
 import com.tweety.feedservice.dto.UserIdListDto;
-import com.tweety.feedservice.feignproxy.TweetServiceProxy;
-import com.tweety.feedservice.feignproxy.UserServiceProxy;
+import com.tweety.feedservice.openfeign.TweetServiceProxy;
+import com.tweety.feedservice.openfeign.UserServiceProxy;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

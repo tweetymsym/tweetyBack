@@ -9,7 +9,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,12 +24,19 @@ public class TweetController {
 
     @PostMapping("")
     public ResponseEntity<Void> createTweet(
-            @RequestBody CreateTweetDto dto
+            @Valid @RequestBody CreateTweetDto dto
     ) {
         Tweet tweet = tweetService.createTweet(dto);
-        return new ResponseEntity<>(
-                HttpStatus.CREATED
-        );
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(tweet.getId())
+                .toUri();
+
+        return ResponseEntity
+                .created(location)
+                .build();
     }
 
     @GetMapping("")
