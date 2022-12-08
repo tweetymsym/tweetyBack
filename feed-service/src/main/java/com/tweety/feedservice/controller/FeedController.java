@@ -27,16 +27,6 @@ public class FeedController {
         );
     }
 
-    @GetMapping("/tweet-details/{id}")
-    public ResponseEntity<TweetDetailsDto> getTweetsDetails(
-            @PathVariable("id") String id
-    ) {
-        return new ResponseEntity<>(
-                feedService.getTweetsDetails(id),
-                HttpStatus.OK
-        );
-    }
-
     @GetMapping("/default")
     public ResponseEntity<List<TweetInListDto>> getDefaultFeed() {
         return new ResponseEntity<>(

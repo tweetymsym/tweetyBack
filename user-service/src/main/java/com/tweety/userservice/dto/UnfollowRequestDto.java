@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BlockRequest {
-    String currentUserId;
-    String userToBlockId;
+public class UnfollowRequestDto {
+        private String currentUserId;
+        private String userToUnFollow;
 }

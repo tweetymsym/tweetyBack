@@ -1,4 +1,4 @@
-package com.tweety.tweetservice.exception;
+package com.tweety.userservice.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

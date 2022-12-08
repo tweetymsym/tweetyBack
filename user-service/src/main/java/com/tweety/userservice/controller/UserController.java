@@ -1,6 +1,7 @@
 package com.tweety.userservice.controller;
 
 import com.tweety.userservice.dto.CreateUserDto;
+import com.tweety.userservice.dto.UserDetailsDto;
 import com.tweety.userservice.model.User;
 import com.tweety.userservice.service.UserService;
 import lombok.AllArgsConstructor;
@@ -9,12 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/users")
 @Slf4j
 public class UserController {
 
@@ -22,9 +23,8 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<Void> createUser(
-            @RequestBody CreateUserDto dto
-            )
-    {
+            @Valid @RequestBody CreateUserDto dto
+    ) {
         userService.createUser(dto);
         return new ResponseEntity<>(
                 HttpStatus.CREATED
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<User>> GetAllUser() {
+    public ResponseEntity<List<User>> getAllUser() {
         //if (users.size()==0) return  new ResponseEntity<List<User>>(userService.getAllUsers(), HttpStatus.NO_CONTENT);
         return  new ResponseEntity<>(
                 userService.getAllUsers(),
@@ -41,20 +41,24 @@ public class UserController {
         );
     }
 
-    @DeleteMapping("/{userID}")
-    public ResponseEntity<Void> DeleteUser(@PathVariable String userID)  {
-            userService.deleteUserById(userID);
-        return  new ResponseEntity<>(
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(
+            @PathVariable("userId") String userId
+    ) {
+        userService.deleteUserById(userId);
+        return new ResponseEntity<>(
             HttpStatus.NO_CONTENT
-    );
+        );
     }
 
 
-    @GetMapping("/{userID}")
-    public ResponseEntity<User> GetUser(@PathVariable String userID)  {
-        Optional<User> user = userService.getUserById(userID);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDetailsDto> getUser(
+            @PathVariable("userId") String userId
+    ) {
+        UserDetailsDto user = userService.getUserById(userId);
         return  new ResponseEntity<>(
-                user.get(),
+                user,
                 HttpStatus.OK
         );
     }

@@ -45,14 +45,8 @@ public class FeedService {
 
     public List<TweetInListDto> getFeed() {
         UserIdListDto userIdListDto =
-                userServiceProxy.getFollowingIdList(1l).getBody();
-        List<TweetInListDto> tweetInListDtoList =
-                tweetServiceProxy.getTweets(userIdListDto).getBody();
-        return tweetInListDtoList;
+                userServiceProxy.getFollowingIdList("dummy").getBody();
+        return tweetServiceProxy.getTweets(userIdListDto).getBody();
     }
 
-    public TweetDetailsDto getTweetsDetails(String id) {
-        return tweetServiceProxy.getTweetWithId(id)
-                .getBody();
-    }
 }

@@ -1,7 +1,9 @@
 package com.tweety.userservice.service;
 
-import com.tweety.userservice.dto.BlockRequest;
-import com.tweety.userservice.dto.UnBlockRequest;
+import com.tweety.userservice.dto.BlockRequestDto;
+import com.tweety.userservice.dto.UnBlockRequestDto;
+import com.tweety.userservice.exception.UserBlockingHimselfException;
+import com.tweety.userservice.exception.UserNotBlockedException;
 import com.tweety.userservice.model.User;
 import com.tweety.userservice.repository.BlockRepository;
 import lombok.AllArgsConstructor;
@@ -17,28 +19,27 @@ public class BlockService {
 
     private BlockRepository blockRepository;
 
-    public Boolean blockUser(BlockRequest blockRequest)
+    public void blockUser(BlockRequestDto blockRequest)
     {
         String currentUserID= blockRequest.getCurrentUserId();
         String userToBlockID = blockRequest.getUserToBlockId();
-        if(currentUserID.equals(userToBlockID)) throw new  IllegalArgumentException("You can't Block Your self");
+        if(currentUserID.equals(userToBlockID)) throw new UserBlockingHimselfException(userToBlockID);
 
-        return blockRepository.blockUser(currentUserID,userToBlockID);
+        blockRepository.blockUser(currentUserID, userToBlockID);
     }
 
-    public  Boolean UnblockUser(UnBlockRequest unBlockRequest){
+    public void UnblockUser(UnBlockRequestDto unBlockRequest){
 
         String currentUserID = unBlockRequest.getCurrentUserId();
         String userTOUnBlockID = unBlockRequest.getUserToUnBlockId();
-        return blockRepository.UnBlockUser(currentUserID,userTOUnBlockID);
+        boolean blocked = blockRepository.UnBlockUser(currentUserID, userTOUnBlockID);
+
+        if (blocked) throw new UserNotBlockedException(currentUserID, userTOUnBlockID);
     }
 
-    public List<User> getBlockedUsers(String UserID)
-    {
-        List<User> blockedUsers=blockRepository.getBlocks(UserID);
+    public List<User> getBlockedUsers(String UserID) {
 
-        return blockedUsers;
-
+        return blockRepository.getBlocks(UserID);
     }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "user-service", contextId = "user")
 public interface UserServiceProxy {
 
-    @GetMapping("/api/follow/following/id-list/{UserId}")
-    public ResponseEntity<UserIdListDto> getFollowingIdList(
-            @PathVariable Long UserId );
+    @GetMapping("/api/users/follow/following/id-list/{userId}")
+    ResponseEntity<UserIdListDto> getFollowingIdList(
+            @PathVariable("userId") String userId);
 }

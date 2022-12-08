@@ -20,8 +20,4 @@ public interface TweetServiceProxy {
             @RequestBody UserIdListDto dto
     );
 
-    @GetMapping("api/tweets/{id}")
-    ResponseEntity<TweetDetailsDto> getTweetWithId(
-            @PathVariable("id") String id
-    );
 }
