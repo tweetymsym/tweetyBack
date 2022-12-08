@@ -29,7 +29,7 @@ public class LocatorConfiguration {
 
     Function<PredicateSpec, Buildable<Route>> userServiceRoute =
             predicateSpec -> predicateSpec
-                    .path("/api/users")
+                    .path("/api/users/**")
                     .uri("lb://user-service");
 
     Function<PredicateSpec, Buildable<Route>> feedServiceRoute =

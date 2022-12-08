@@ -2,6 +2,7 @@ config-server:
   url: "localhost"
   port: "8888"
 
+
 spring:
   application:
     name: "user-service"

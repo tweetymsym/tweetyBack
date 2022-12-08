@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface followRepository extends Neo4jRepository<User,String> {
+public interface FollowRepository extends Neo4jRepository<User,String> {
 
 
     @Query("MATCH (CurrentUserId:User ) WHERE CurrentUserId.id=:#{#CurrentUserId} MATCH (UserToFollow:User ) WHERE UserToFollow.id=:#{#UserToFollow} CREATE (CurrentUserId)-[r:FOLLOWS]->(UserToFollow)")
