@@ -1,7 +1,10 @@
 package com.tweety.userservice.controller;
 
 import com.tweety.userservice.dto.CreateUserDto;
+import com.tweety.userservice.dto.UserDetailsDto;
+import com.tweety.userservice.dto.UserInListDto;
 import com.tweety.userservice.model.User;
+import com.tweety.userservice.service.FollowService;
 import com.tweety.userservice.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,21 +17,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.Valid;
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/users")
 @Slf4j
 @CrossOrigin("*")
 public class UserController {
 
     private UserService userService;
-    private com.tweety.userservice.service.followService followService;
+    private FollowService followService;
 
     @PostMapping("")
     public ResponseEntity<Void> createUser(
-            @RequestBody CreateUserDto dto
-            )
-    {
+            @Valid @RequestBody CreateUserDto dto
+    ) {
         userService.createUser(dto);
         return new ResponseEntity<>(
                 HttpStatus.CREATED
@@ -37,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<User>> GetAllUser() {
+    public ResponseEntity<List<UserInListDto>> getAllUser() {
         //if (users.size()==0) return  new ResponseEntity<List<User>>(userService.getAllUsers(), HttpStatus.NO_CONTENT);
         return  new ResponseEntity<>(
                 userService.getAllUsers(),
@@ -45,18 +50,19 @@ public class UserController {
         );
     }
 
+
     @GetMapping("/detail/{userID}")
-    public Map<String,List<User>> GetDetailed(@PathVariable String userID)
+    public Map<String,List<UserInListDto>> GetDetailed(@PathVariable String userID)
     {
-        List<User> following=followService.getFollowings(userID);
-        List<User> all= userService.getAllUsers();
-        Map<String,List<User>> hashMap=new HashMap<>();
-        hashMap.put("not",new ArrayList<User>());
-        hashMap.put("yes",new ArrayList<User>());
-        Stream<User> stream = all.stream();
+        List<UserInListDto> following=followService.getFollowings(userID);
+        List<UserInListDto> all= userService.getAllUsers();
+        Map<String,List<UserInListDto>> hashMap=new HashMap<>();
+        hashMap.put("not",new ArrayList<UserInListDto>());
+        hashMap.put("yes",new ArrayList<UserInListDto>());
+        Stream<UserInListDto> stream = all.stream();
 
 // Use the filter method to remove the user with the specified ID
-        List<User> updatedUsers = stream.filter(user -> user.getId().equals(userID)==false)
+        List<UserInListDto> updatedUsers = stream.filter(user -> user.getId().equals(userID)==false)
                 .collect(Collectors.toList());
 
         updatedUsers.removeAll(following);
@@ -72,13 +78,13 @@ public class UserController {
             }
 
 
-            List<User> lis=hashMap.get("not");
+            List<UserInListDto> lis=hashMap.get("not");
             lis.add(updatedUsers.get(i));
             hashMap.put("not",lis);
         }
         for (int i=0;i<following.size();i++)
         {
-            List<User> lis=hashMap.get("yes");
+            List<UserInListDto> lis=hashMap.get("yes");
             lis.add(following.get(i));
             hashMap.put("yes",lis);
         }
@@ -90,20 +96,27 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/{userID}")
-    public ResponseEntity<Void> DeleteUser(@PathVariable String userID)  {
-            userService.deleteUserById(userID);
-        return  new ResponseEntity<>(
+
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(
+            @PathVariable("userId") String userId
+    ) {
+        userService.deleteUserById(userId);
+        return new ResponseEntity<>(
+
             HttpStatus.NO_CONTENT
-    );
+        );
     }
 
 
-    @GetMapping("/{userID}")
-    public ResponseEntity<User> GetUser(@PathVariable String userID)  {
-        Optional<User> user = userService.getUserById(userID);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDetailsDto> getUser(
+            @PathVariable("userId") String userId
+    ) {
+        UserDetailsDto user = userService.getUserById(userId);
         return  new ResponseEntity<>(
-                user.get(),
+                user,
                 HttpStatus.OK
         );
     }

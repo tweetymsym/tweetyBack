@@ -1,6 +1,5 @@
 package com.tweety.userservice.dto;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FollowRequest {
-    private String currentUserId;
-    private String userToFollow;
+public class UnBlockRequestDto {
+    String currentUserId;
+    String userToUnBlockId;
 }

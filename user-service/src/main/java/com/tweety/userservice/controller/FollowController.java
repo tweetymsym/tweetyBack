@@ -2,6 +2,7 @@ package com.tweety.userservice.controller;
 
 import com.tweety.userservice.dto.*;
 import com.tweety.userservice.model.User;
+import com.tweety.userservice.service.FollowService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,46 +13,46 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/follow")
+@RequestMapping("api/users/follow")
 @Slf4j
 @CrossOrigin("*")
-public class followController {
 
-    private com.tweety.userservice.service.followService followService;
+public class FollowController {
 
+    private FollowService followService;
 
     @PostMapping("")
     public ResponseEntity<Void> FollowUser(
-            @RequestBody FollowRequest followRequest
+            @RequestBody FollowRequestDto followRequestDto
     ) {
-        followService.FollowUser(followRequest);
+        followService.followUser(followRequestDto);
         return new ResponseEntity<>(
                 HttpStatus.CREATED
         );
     }
 
-    @GetMapping("/followers/{UserId}")
-    public ResponseEntity<List<User>> getFollowers(
-             @PathVariable String UserId )
+    @GetMapping("/followers/{userId}")
+    public ResponseEntity<List<UserInListDto>> getFollowers(
+             @PathVariable String userId )
     {
         return new ResponseEntity<>(
-                followService.getFollowers(UserId),
+                followService.getFollowers(userId),
                 HttpStatus.OK
         );
     }
 
-    @GetMapping("following/id-list/{UserId}")
+    @GetMapping("following/id-list/{userId}")
     public ResponseEntity<UserIdListDto> getFollowingIdList(
-            @PathVariable String UserId )
+            @PathVariable("userId") String userId )
     {
         return new ResponseEntity<>(
-                followService.getFollowingsIdList(UserId),
+                followService.getFollowingsIdList(userId),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("following/{UserId}")
-    public ResponseEntity<List<User>> getFollowing(
+    public ResponseEntity<List<UserInListDto>> getFollowing(
             @PathVariable String UserId )
     {
         return new ResponseEntity<>(
@@ -62,30 +63,12 @@ public class followController {
 
     @PostMapping("/unfollow")
     public ResponseEntity<Void> UnfollowUser(
-            @RequestBody UnfollowRequest unfollowRequest
-
-    )
-            throws IllegalArgumentException
-    {
+            @RequestBody UnfollowRequestDto unfollowRequest
+    ) {
         followService.unFollowUser(unfollowRequest);
         return new ResponseEntity<>(
                 HttpStatus.OK
         );
-    }
-
-    @PostMapping("/removefromfollowers")
-    public ResponseEntity<Void> UnfollowUser(
-            @RequestBody RemoveFromFollowersRequest removeFromFollowersRequest
-    )
-            throws IllegalArgumentException
-    {
-
-            followService.removeFromMyFollowers(removeFromFollowersRequest);
-
-        return new ResponseEntity<>(
-                HttpStatus.CREATED
-        );
-
     }
 
 }

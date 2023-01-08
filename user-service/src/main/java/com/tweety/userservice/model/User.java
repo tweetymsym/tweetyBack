@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -37,8 +38,7 @@ public class User {
     @JsonIgnore
     private String password;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
-    @Property
-    private ZonedDateTime lastTweet;
+
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
@@ -46,6 +46,10 @@ public class User {
         User user = (User) o;
         return user.getId().equals(this.getId());
     }
+
+    private Instant lastTweet;
+
+
     //private List<String> tweetsIds;
 
     //@Relationship(type="FOLLOWS",direction = Relationship.Direction.OUTGOING)

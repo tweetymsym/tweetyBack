@@ -1,8 +1,10 @@
 package com.tweety.tweetservice.service;
 
 import com.tweety.tweetservice.dto.CreateTweetDto;
+import com.tweety.tweetservice.dto.TweetDetailsDto;
 import com.tweety.tweetservice.dto.TweetInListDto;
 import com.tweety.tweetservice.dto.UserIdListDto;
+import com.tweety.tweetservice.exception.TweetNotFoundException;
 import com.tweety.tweetservice.mapper.TweetMapper;
 import com.tweety.tweetservice.model.Tweet;
 import com.tweety.tweetservice.repository.TweetRepository;
@@ -39,5 +41,13 @@ public class TweetService {
                 .map(
                         (Tweet tweet) -> tweetMapper.TweetToTweetInListDto(tweet)
                 ).collect(Collectors.toList());
+    }
+
+    public TweetDetailsDto getTweetWithId(String id) {
+        return tweetMapper.TweetToTweetDetailsDto(
+                tweetRepository.findById(id).orElseThrow(
+                        () -> new TweetNotFoundException(id)
+                )
+        );
     }
 }
