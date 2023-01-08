@@ -3,6 +3,7 @@ package com.tweety.userservice.service;
 
 import com.tweety.userservice.dto.CreateUserDto;
 import com.tweety.userservice.dto.UserDetailsDto;
+import com.tweety.userservice.dto.UserInListDto;
 import com.tweety.userservice.exception.EmailAlreadyExistsException;
 import com.tweety.userservice.exception.UserIdNotFoundException;
 import com.tweety.userservice.exception.UsernameAlreadyExistsException;
@@ -17,6 +18,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,8 +49,10 @@ public class UserService {
     }
 
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserInListDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::userToUserInListDtoMapper)
+                .collect(Collectors.toList());
     }
 
 
