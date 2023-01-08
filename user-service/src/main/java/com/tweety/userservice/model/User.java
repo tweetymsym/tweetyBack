@@ -39,7 +39,13 @@ public class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
     @Property
     private ZonedDateTime lastTweet;
-
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return user.getId().equals(this.getId());
+    }
     //private List<String> tweetsIds;
 
     //@Relationship(type="FOLLOWS",direction = Relationship.Direction.OUTGOING)

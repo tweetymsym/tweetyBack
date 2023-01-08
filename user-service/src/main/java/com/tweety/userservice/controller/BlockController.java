@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/block")
 @Slf4j
+@CrossOrigin("*")
 public class BlockController {
 
     private BlockService blockService;

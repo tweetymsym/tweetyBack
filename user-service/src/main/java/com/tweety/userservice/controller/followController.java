@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/follow")
 @Slf4j
+@CrossOrigin("*")
 public class followController {
 
     private com.tweety.userservice.service.followService followService;
