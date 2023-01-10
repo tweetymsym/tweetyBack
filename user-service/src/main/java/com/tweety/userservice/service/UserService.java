@@ -10,6 +10,7 @@ import com.tweety.userservice.mapper.UserMapper;
 import com.tweety.userservice.model.User;
 import com.tweety.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ import java.util.UUID;
 public class UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
     private UserMapper userMapper;
 
     public User createUser(CreateUserDto dto) {
@@ -33,6 +35,7 @@ public class UserService {
         if (userRepository.existsByEmail(dto.getEmail()))
             throw new EmailAlreadyExistsException(dto.getEmail());
         user.setId(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
